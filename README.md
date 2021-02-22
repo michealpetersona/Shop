@@ -1,6 +1,6 @@
 # Getting Started with 🛍️ Shop 🛒!
 
-This project highlights the implementation of a typeahead search and mutli-option select using the spoonucular API. The typeahed uses a suggestion API to search and a details API to display data about the selected option.
+This project highlights the implementation of a typeahead search and mutli-option select using the spoonucular API. The typeahead uses a suggestion API to search and a details API to display data about the selected option.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
