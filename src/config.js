@@ -1,3 +1,3 @@
 export default {
-  API: process.env.API || 'http://localhost:3000'
+  API: process.env.REACT_APP_API || 'http://localhost:3000'
 }
