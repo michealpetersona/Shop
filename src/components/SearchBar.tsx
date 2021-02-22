@@ -3,10 +3,11 @@ import Autocomplete from '@material-ui/lab/Autocomplete'
 import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import groceryAutocomplete from '../services/grocery-product-autocomplete'
-import { BehaviorSubject, Observable, pipe } from 'rxjs'
+import { BehaviorSubject, from, Observable, pipe } from 'rxjs'
 import { debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators'
 import { GrocerySuggestion } from '../domain/GroceryAutocomplete'
 import ItemsContext, { GroceryItem } from '../contexts/ItemsContext'
+import AuthContext from '../contexts/AuthContext'
 
 interface GroceryOptions {
   [id: string]: GrocerySuggestion
@@ -20,14 +21,19 @@ const setAutoCompleteInput = (value: string): void => autoCompleteInput.next(val
 
 export default function SearchBar() {
   const itemsContext = useContext(ItemsContext)
+  const authContext = useContext(AuthContext)
 
   const [options, setOptions] = useState<GroceryOptions>({})
   const [selectedOptions, setSelectedOptions] = useState<GroceryOptions>({})
 
+  const myGroceryAutocomplete = (query: string) : Observable<GrocerySuggestion[]> => {
+    return groceryAutocomplete(query, authContext.authCode)
+  }
+
   const grocerySelectOptions: Observable<GrocerySuggestion[]> = autoCompleteInput.pipe(
     debounceTime(400),
     distinctUntilChanged(),
-    switchMap(groceryAutocomplete)
+    switchMap(myGroceryAutocomplete)
   )
 
   useEffect(() => {

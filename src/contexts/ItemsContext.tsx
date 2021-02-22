@@ -1,18 +1,11 @@
-import React, { useState, createContext, useEffect } from 'react'
+import React, { useState, createContext, useEffect, useContext } from 'react'
 import { BehaviorSubject, from, Observable, Subject } from 'rxjs'
 import { filter, map, switchMap, tap } from 'rxjs/operators'
 import { GrocerySuggestion } from '../domain/GroceryAutocomplete'
 import GroceryProduct from '../domain/GroceryProduct'
 import grocerySearch from '../services/grocery-product-search'
+import AuthContext from './AuthContext'
 
-/*
-* change state to map (or object) where id's are keys
-* do updateItems map with pipe instead
-* subsribe to emitted values to convert to grocery product
-emit values from updateItems
-push emited values to observable for items
-subscribe to items and map with grocery search all suggestions
-*/
 export type GroceryItem = (GroceryProduct | GrocerySuggestion)
 export interface GroceryItems {
   [id: string]: GroceryProduct
@@ -32,6 +25,12 @@ const ItemsContext = createContext(ItemsContextStarter)
 export const ItemsContextProvider = ({ children }: {children: any}) => {
   const [items, setItems] = useState<GroceryItems>({})
   const [options, setOptions] = useState<GrocerySuggestion[]>([])
+
+  const authContext = useContext(AuthContext)
+
+  const myGrocerySearch = (id: number) : Promise<GroceryProduct> => {
+    return grocerySearch(id, authContext.authCode)
+  }
   
   const updateItems = (newItems: GrocerySuggestion[]) => {
     //remove items
@@ -49,7 +48,7 @@ export const ItemsContextProvider = ({ children }: {children: any}) => {
     //add new items
     options
       .filter((val: GrocerySuggestion) => !items.hasOwnProperty(val.id))
-      .map((val: GrocerySuggestion) => grocerySearch(val.id)
+      .map((val: GrocerySuggestion) => myGrocerySearch(val.id)
         .then((val: GroceryProduct) => setItems({...items, [val.id]: val}) ))
 
   },[options])

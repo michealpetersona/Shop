@@ -5,20 +5,25 @@ import ShoppingList from './components/ShoppingList'
 import Container from '@material-ui/core/Container'
 import './App.css'
 import { ItemsContextProvider } from './contexts/ItemsContext'
+import { AuthContextProvider } from './contexts/AuthContext'
+import PasswordBar from './components/PasswordBar'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Shop!</h1>
-      </header>
-      <Container maxWidth="lg">
-        <ItemsContextProvider>
-          <SearchBar/>
-          <ShoppingList/>
-        </ItemsContextProvider>
-      </Container>
-    </div>
+    <AuthContextProvider>
+      <div className="App">
+        <PasswordBar/>
+        <header className="App-header">
+          <h1>Shop!</h1>
+        </header>
+        <Container maxWidth="lg">
+            <ItemsContextProvider>
+              <SearchBar/>
+              <ShoppingList/>
+            </ItemsContextProvider>
+        </Container>
+      </div>
+    </AuthContextProvider>
   )
 }
 

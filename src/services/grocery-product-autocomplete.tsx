@@ -1,21 +1,20 @@
 import axios, { AxiosResponse, AxiosRequestConfig } from 'axios'
 import { Observable, EMPTY } from 'rxjs'
 import { GroceryAutocomplete, GrocerySuggestion } from '../domain/GroceryAutocomplete'
+import CONFIG from '../config'
 
-const options = (query: string) : AxiosRequestConfig => { return {
+const options = (query: string, authCode : string) : AxiosRequestConfig => { return {
   method: 'GET',
-  url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/food/products/suggest',
-  params: {query: query, number: '10'},
+  url: `${CONFIG.API}/products/suggest?query=${query}`,
   headers: {
-    'x-rapidapi-key': '8bdc4d14bfmsh5bb07853bfbe3b1p1b793ejsn3f42a6fcc70b',
-    'x-rapidapi-host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
+    'Authorization': authCode
   }
 } }
 
-const groceryAutocomplete = (query : string ) : Observable<GrocerySuggestion[]> => {
+const groceryAutocomplete = (query : string, authCode : string) : Observable<GrocerySuggestion[]> => {
   if(query === null || query.trim() === '') { return EMPTY }
   return new Observable( (observer) => {
-    axios.request(options(query))
+    axios.request(options(query, authCode))
       .then( (response: AxiosResponse<GroceryAutocomplete>) => {
         observer.next(response.data.results)
         observer.complete()
