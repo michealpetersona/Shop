@@ -3,7 +3,6 @@
 Demo live here: https://shop-michealpetersona.vercel.app/
 
 #### DEMO Password: [Your organization's name no spaces]
-If password does not work at first please try refreshing page
 
 This project highlights the implementation of a typeahead search and mutli-option select using the spoonucular API. The typeahead uses a suggestion API to search and a details API to display data about the selected option.
 
