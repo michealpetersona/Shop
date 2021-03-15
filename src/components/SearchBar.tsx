@@ -63,7 +63,7 @@ export default function SearchBar() {
           <TextField
             {...params}
             variant="standard"
-            label="Search products"
+            label="Search grocery products"
           />
         )}
       />

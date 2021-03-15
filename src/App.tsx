@@ -17,6 +17,7 @@ function App() {
           <h1>Shop!</h1>
         </header>
         <Container maxWidth="lg">
+            <h3 className='text-align-left'>Type in the box below to find your favorite items for your grocery list!</h3>
             <GroceryProductsContextProvider>
               <SearchBar/>
               <ShoppingList/>
