@@ -21,13 +21,14 @@ const setAutoCompleteInput = (value: string): void => autoCompleteInput.next(val
 
 export default function SearchBar() {
   const productsContext : GroceryProductsContextType = useContext(GroceryProductsContext)
-  const authContext = useContext(AuthContext)
 
   const [options, setOptions] = useState<GroceryOptions>({})
   const [selectedOptions, setSelectedOptions] = useState<GroceryOptions>({})
 
+  const authContext = useContext(AuthContext)
+
   const myGroceryAutocomplete = (query: string) : Observable<GrocerySuggestion[]> => {
-    return groceryAutocomplete(query, authContext.authCode)
+    return groceryAutocomplete(query, authContext.getAuthCode())
   }
 
   const grocerySelectOptions: Observable<GrocerySuggestion[]> = autoCompleteInput.pipe(

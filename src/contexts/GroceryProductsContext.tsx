@@ -1,9 +1,8 @@
 import React, { useState, createContext, useEffect, useContext } from 'react'
-import { GroupedObservable } from 'rxjs'
 import { GrocerySuggestion } from '../domain/GroceryAutocomplete'
 import GroceryProduct from '../domain/GroceryProduct'
 import grocerySearch from '../services/grocery-product-search'
-import AuthContext from './AuthContext'
+import AuthContext from '../contexts/AuthContext'
 
 export interface GroceryProductCollection {
   [id: string]: GroceryProduct
@@ -27,7 +26,7 @@ export const GroceryProductsContextProvider = ({ children }: {children: any}) =>
   const authContext = useContext(AuthContext)
 
   const myGrocerySearch = (id: number) : Promise<GroceryProduct> => {
-    return grocerySearch(id, authContext.authCode)
+    return grocerySearch(id, authContext.getAuthCode())
   }
   
   const updateGrocerySuggestions = (newSuggestions: GrocerySuggestion[]) => {

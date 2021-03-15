@@ -1,6 +1,7 @@
 import axios, { AxiosResponse, AxiosRequestConfig } from 'axios'
 import GroceryProduct from '../domain/GroceryProduct'
 import CONFIG from '../config'
+import { AuthContextType } from '../contexts/AuthContext'
 
 const baseTemplate = (id: number) : string => `${CONFIG.API}/products/?id=${id}`
 
@@ -13,8 +14,10 @@ const options = (id: number, authCode : string) : AxiosRequestConfig => { return
 } }
 
 const grocerySearch = async (id: number, authCode : string): Promise<GroceryProduct> => {
-  let response: AxiosResponse<GroceryProduct> = await axios.request(options(id, authCode)).catch(
-    (error) => { throw new Error('Error finding product info') })
+  let response: AxiosResponse<GroceryProduct> = await axios.request(options(id, authCode))
+  .catch(
+    (error) => { throw new Error('Error finding product info') }
+    )
 
   return response.data
 }
