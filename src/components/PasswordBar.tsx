@@ -8,7 +8,7 @@ const PasswordBar = () => {
     <div>
       <h3>
       Demo Password: 
-      <input onChange={(evt) => authContext.setAuthCode(evt.target.value)} value={authContext.authCode}/>
+      <input onChange={(event) => authContext.setAuthCode(event.target.value)} value={authContext.authCode}/>
       </h3>
     </div>
   )

@@ -6,7 +6,7 @@ import groceryAutocomplete from '../services/grocery-product-autocomplete'
 import { BehaviorSubject, from, Observable, pipe } from 'rxjs'
 import { debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators'
 import { GrocerySuggestion } from '../domain/GroceryAutocomplete'
-import ItemsContext, { GroceryItem } from '../contexts/ItemsContext'
+import GroceryProductsContext, { GroceryProductsContextType } from '../contexts/GroceryProductsContext'
 import AuthContext from '../contexts/AuthContext'
 
 interface GroceryOptions {
@@ -20,7 +20,7 @@ const autoCompleteInput = new BehaviorSubject('')
 const setAutoCompleteInput = (value: string): void => autoCompleteInput.next(value)
 
 export default function SearchBar() {
-  const itemsContext = useContext(ItemsContext)
+  const productsContext : GroceryProductsContextType = useContext(GroceryProductsContext)
   const authContext = useContext(AuthContext)
 
   const [options, setOptions] = useState<GroceryOptions>({})
@@ -43,7 +43,7 @@ export default function SearchBar() {
   },[])
 
   useEffect(() => {
-    itemsContext.updateItems(Object.values(selectedOptions))
+    productsContext.updateGroceryProducts(Object.values(selectedOptions))
   },[selectedOptions])
 
   return (

@@ -13,6 +13,7 @@ export default interface GroceryProduct {
   generated_text: Widget;
   ingredientCount: number;
   images: GroceryImage[];
+  aisle: string;
 }
 
 interface GroceryImage {

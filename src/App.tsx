@@ -4,7 +4,7 @@ import SearchBar from './components/SearchBar'
 import ShoppingList from './components/ShoppingList'
 import Container from '@material-ui/core/Container'
 import './App.css'
-import { ItemsContextProvider } from './contexts/ItemsContext'
+import { GroceryProductsContextProvider } from './contexts/GroceryProductsContext'
 import { AuthContextProvider } from './contexts/AuthContext'
 import PasswordBar from './components/PasswordBar'
 
@@ -17,10 +17,10 @@ function App() {
           <h1>Shop!</h1>
         </header>
         <Container maxWidth="lg">
-            <ItemsContextProvider>
+            <GroceryProductsContextProvider>
               <SearchBar/>
               <ShoppingList/>
-            </ItemsContextProvider>
+            </GroceryProductsContextProvider>
         </Container>
       </div>
     </AuthContextProvider>

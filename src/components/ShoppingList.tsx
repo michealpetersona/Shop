@@ -7,13 +7,13 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
 import GroceryProduct from '../domain/GroceryProduct'
-import ItemsContext from '../contexts/ItemsContext'
+import GroceryProductsContext, { GroceryProductsContextType } from '../contexts/GroceryProductsContext'
 
 const ShoppingList = () => {
-  const itemsContext = useContext(ItemsContext)
-  const items = itemsContext.items
+  const productsContext : GroceryProductsContextType = useContext(GroceryProductsContext)
+  const groceryProducts = productsContext.groceryProducts
 
-  if(items === undefined || Object.keys(items).length == 0) { return null }
+  if(groceryProducts === undefined || Object.keys(groceryProducts).length == 0) { return null }
   return ( 
   <TableContainer component={Paper} className="mt-2">
     <Table aria-label="simple table">
@@ -21,11 +21,13 @@ const ShoppingList = () => {
         <TableRow>
         <TableCell>Title</TableCell>
         <TableCell>Price</TableCell>
+        <TableCell>Aisle</TableCell>
+        <TableCell>Ingredient Count</TableCell>
         </TableRow>
         </TableHead>
         <TableBody>
-      {Object.keys(items).map((key: string) => {
-        const product: GroceryProduct = items[key]
+      {Object.keys(groceryProducts).map((key: string) => {
+        const product: GroceryProduct = groceryProducts[key]
         const price = product.price > 0 ? 
           new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(product.price/100)
           : 'N/A'
@@ -37,6 +39,12 @@ const ShoppingList = () => {
             </TableCell>
             <TableCell>
               {price}
+            </TableCell>
+            <TableCell>
+              {product.aisle}
+            </TableCell>
+            <TableCell>
+              {product.ingredientCount}
             </TableCell>
           </TableRow>
         )
